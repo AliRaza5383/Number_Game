@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Number Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .game-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #submit-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        #reset-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #fa-paragraph {
+            display: none;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        #fa-paragraph ul {
+            list-style-type: none;
+        }
+
+        #fa-paragraph ul li {
+            margin: 5px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            input {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            #submit-btn,
+            #reset-btn {
+                font-size: 16px;
+            }
+
+            .message {
+                font-size: 14px;
+            }
+
+            #fa-paragraph {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                width: 70%;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            input,
+            button {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width:375px) {
+            body {
+                height: 80vh;
+            }
+        }
+
+        @media (max-width:356px) {
+            input {
+                padding: 9px;
+                margin: 8px 0;
+                font-size: 11px;
+            }
+
+            #submit-btn,
+            #reset-btn {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+        <h1>Welcome to the Number Game!</h1>
+        <input type="text" id="guess" placeholder="Enter number (between 1 to 100)">
+        <p class="message" id="message"></p>
+        <button id="submit-btn">Submit</button>
+        <button id="reset-btn" class="hidden">Play Again</button>
+        <button onclick="toggleInfo()">Game Rules</button>
+
+        <div id="fa-paragraph">
+            <ul>
+                <li>A number is chosen within a specified range (1 to 100).</li>
+                <li>Players take turns guessing the number.</li>
+                <li>After each guess, feedback is given:
+                    <ul>
+                        <li>"Too high" if the guess is greater than the number.</li>
+                        <li>"Too low" if the guess is less than the number.</li>
+                        <li>"Correct!" if the guess matches the number.</li>
+                    </ul>
+                </li>
+                <li>The game continues until the correct number is guessed.</li>
+                <li>The player who guesses the number correctly wins.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        const guessInput = document.getElementById("guess");
+        const message = document.getElementById("message");
+        const submitBtn = document.getElementById("submit-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const paragraph = document.getElementById("fa-paragraph");
+
+        // Toggle the visibility of the game rules
+        function toggleInfo() {
+            if (paragraph.style.display === "none") {
+                paragraph.style.display = "block";
+            } else {
+                paragraph.style.display = "none";
+            }
+        }
+
+        submitBtn.addEventListener("click", function () {
+            let userGuess = guessInput.value.trim();
+
+            if (userGuess === "") {
+                message.textContent = "Please enter a number!";
+                message.style.color = "red";
+                return;
+            }
+
+            let num = Number(userGuess);
+
+            if (isNaN(num) || num < 1 || num > 100) {
+                message.textContent = "Enter a valid number (1-100)";
+                message.style.color = "red";
+                return;
+            }
+
+            attempts++;
+
+            if (num === randomNumber) {
+                message.textContent = `🎉 Correct! You guessed it in ${attempts} attempts.`;
+                message.style.color = "green";
+                submitBtn.disabled = true;
+                resetBtn.classList.remove("hidden");
+            } else if (num < randomNumber) {
+                message.textContent = "📉 Too low! Try again.";
+                message.style.color = "blue";
+            } else {
+                message.textContent = "📈 Too high! Try again.";
+                message.style.color = "blue";
+            }
+
+            guessInput.value = "";
+        });
+
+        resetBtn.addEventListener("click", function () {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            message.textContent = "";
+            guessInput.value = "";
+            submitBtn.disabled = false;
+            resetBtn.classList.add("hidden");
+        });
+    </script>
+
+</body>
+
+</html>
