@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Number Game</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="game-container">
+        <h1>Welcome to the Number Game!</h1>
+        <input type="text" id="guess" placeholder="Enter number (between 1 to 100)">
+        <p class="message" id="message"></p>
+        <button id="submit-btn">Submit</button>
+        <button id="reset-btn" class="hidden">Play Again</button>
+        <button onclick="toggleInfo()">Game Rules</button>
+
+        <div id="fa-paragraph">
+            <ul>
+                <li>A number is chosen within a specified range (1 to 100).</li>
+                <li>Players take turns guessing the number.</li>
+                <li>After each guess, feedback is given:
+                    <ul>
+                        <li>"Too high" if the guess is greater than the number.</li>
+                        <li>"Too low" if the guess is less than the number.</li>
+                        <li>"Correct!" if the guess matches the number.</li>
+                    </ul>
+                </li>
+                <li>The game continues until the correct number is guessed.</li>
+                <li>The player who guesses the number correctly wins.</li>
+            </ul>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
