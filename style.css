@@ -19,7 +19,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 440px;
 }
 
 h1 {
@@ -41,7 +41,7 @@ button {
     padding: 10px;
     margin: 5px 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -120,7 +120,7 @@ button {
     }
 
     h1 {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     input,
@@ -132,6 +132,10 @@ button {
 @media (max-width:375px) {
     body {
         height: 80vh;
+    }
+
+    .game-container{
+        width: 86%;
     }
 }
 
